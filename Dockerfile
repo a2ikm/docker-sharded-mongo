@@ -14,7 +14,8 @@ RUN curl -sLo /usr/local/bin/wait-for https://raw.githubusercontent.com/eficode/
 
 RUN mkdir -p \
       /var/lib/sharded-mongo/mongod-config \
-      /var/lib/sharded-mongo/mongod-shard
+      /var/lib/sharded-mongo/mongod-shard \
+      /docker-sharded-mongo-initdb.d
 
 COPY start-sharded-cluster /usr/local/bin
 RUN chmod +x /usr/local/bin/start-sharded-cluster

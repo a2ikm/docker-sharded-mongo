@@ -3,5 +3,5 @@ services:
   mongo:
     build:
       context: "."
-    environment:
-      SHARDED_DATABASE: "test"
+    volumes:
+      - "./sample-sharded-mongo-initdb.d:/docker-sharded-mongo-initdb.d"
