@@ -1,7 +1,9 @@
-.PHONY: build-4-2
-build-4-2:
-	docker build --build-arg VERSION=4.2 --tag a2ikm/sharded-mongo:4.2 .
+VERSIONS = 4.0 4.2 4.4 5.0
 
-.PHONY: push-all
+all: $(VERSIONS)
+
+$(VERSIONS):
+	docker build --build-arg VERSION=$@ --tag a2ikm/sharded-mongo:$@ .
+
 push-all:
 	docker push --all-tags a2ikm/sharded-mongo
