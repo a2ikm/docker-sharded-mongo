@@ -12,7 +12,11 @@ mongod \
   --logpath /var/log/mongod-config.log
 
 wait-for localhost:27019
-mongosh --eval 'rs.initiate({_id: "config", configsvr: true, members: [{ _id : 0, host : "localhost:27019" }]})' localhost:27019
+
+if [ ! -e /var/lib/sharded-mongo/mongod-config.initialized ]; then
+  mongosh --eval 'rs.initiate({_id: "config", configsvr: true, members: [{ _id : 0, host : "localhost:27019" }]})' localhost:27019
+  touch /var/lib/sharded-mongo/mongod-config.initialized
+fi
 
 mongod \
   --shardsvr \
@@ -24,7 +28,11 @@ mongod \
   --logpath /var/log/mongod-shard.log
 
 wait-for localhost:27018
-mongosh --eval 'rs.initiate({_id: "shard", members: [{ _id : 0, host : "localhost:27018" }]})' localhost:27018
+
+if [ ! -e /var/lib/sharded-mongo/mongod-shard.initialized ]; then
+  mongosh --eval 'rs.initiate({_id: "shard", members: [{ _id : 0, host : "localhost:27018" }]})' localhost:27018
+  touch /var/lib/sharded-mongo/mongod-shard.initialized
+fi
 
 mongos \
   --configdb config/localhost:27019 \
@@ -34,7 +42,11 @@ mongos \
   --logpath /var/log/mongos.log
 
 wait-for localhost:27017
-mongosh --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
-mongosh --eval "sh.enableSharding(\"${SHARDED_DATABASE}\")" localhost:27017
+
+if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
+  mongosh --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
+  mongosh --eval "sh.enableSharding(\"${SHARDED_DATABASE}\")" localhost:27017
+  touch /var/lib/sharded-mongo/mongos.initialized
+fi
 
 exec tail -f /var/log/mongos.log
