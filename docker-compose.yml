@@ -3,5 +3,9 @@ services:
   mongo:
     build:
       context: "."
+      args:
+        - "MONGO_VERSION=latest"
     volumes:
       - "./sample/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    ports:
+      - "27017:27017"
