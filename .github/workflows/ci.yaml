@@ -48,7 +48,7 @@ jobs:
             a2ikm/sharded-mongo:${{ matrix.version }}-test
           build-args: |
             MONGO_VERSION=${{ matrix.version }}
-      - name: test
+      - name: Run tests
         run: |
           docker run --rm \
             --volume "$(pwd)/test/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d" \
