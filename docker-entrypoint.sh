@@ -47,7 +47,7 @@ if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
   mongosh --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
   touch /var/lib/sharded-mongo/mongos.initialized
 
-  for f in /docker-sharded-mongo-initdb.d/*; do
+  for f in /docker-entrypoint-initdb.d/*; do
     case "$f" in
       *.sh) echo "$0: running $f"; . "$f" ;;
       *.js) echo "$0: running $f"; mongosh localhost:27017 "$f"; echo ;;
