@@ -17,7 +17,8 @@ RUN mkdir -p \
       /var/lib/sharded-mongo/mongod-shard \
       /docker-sharded-mongo-initdb.d
 
-COPY start-sharded-cluster /usr/local/bin
-RUN chmod +x /usr/local/bin/start-sharded-cluster
+COPY docker-entrypoint.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-CMD ["/usr/local/bin/start-sharded-cluster"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["tail", "-f", "/var/log/mongos.log"]

@@ -56,4 +56,4 @@ if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
   done
 fi
 
-exec tail -f /var/log/mongos.log
+exec "$@"
