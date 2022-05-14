@@ -1,5 +1,5 @@
-ARG VERSION=latest
-FROM mongo:${VERSION}
+ARG MONGO_VERSION=latest
+FROM mongo:${MONGO_VERSION}
 
 RUN set -eux; \
       apt-get update; \
