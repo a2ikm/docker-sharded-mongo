@@ -1,6 +1,13 @@
 name: CI
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/ci.yaml
+      - test/**
+      - docker-entrypoint.sh
+      - Dockerfile
+      - versions.json
 
 jobs:
   versions:
