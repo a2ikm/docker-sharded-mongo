@@ -4,4 +4,4 @@ services:
     build:
       context: "."
     volumes:
-      - "./sample-sharded-mongo-initdb.d:/docker-entrypoint-initdb.d"
+      - "./sample/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
