@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux
+set -Eeuo pipefail
 
 mongod \
   --configsvr \
