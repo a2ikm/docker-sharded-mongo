@@ -30,10 +30,17 @@ if [ ! -e /var/lib/sharded-mongo/mongod-shard.initialized ]; then
   touch /var/lib/sharded-mongo/mongod-shard.initialized
 fi
 
+cat <<CONF >/etc/mongos.conf
+net:
+  bindIpAll: true
+  ipv6: true
+  port: 27017
+sharding:
+  configDB: config/localhost:27019
+CONF
+
 mongos \
-  --configdb config/localhost:27019 \
-  --bind_ip ::,0.0.0.0 \
-  --port 27017 \
+  --config /etc/mongos.conf \
   --fork \
   --logpath /var/log/mongos.log
 
@@ -49,5 +56,7 @@ if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
     esac
   done
 fi
+
+mongo --eval 'db.shutdownServer()' localhost:27017/admin
 
 exec "$@"
