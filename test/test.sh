@@ -2,6 +2,11 @@
 
 set -Eeu pipefail
 
+mongos \
+  --config /etc/mongos.conf \
+  --fork \
+  --logpath /var/log/mongos.log
+
 js=$(cat << JAVASCRIPT
 db.testcollection.insertMany(
   [
@@ -23,3 +28,4 @@ if [[ $count != 1 ]]; then
   exit 1
 fi
 
+echo ok
