@@ -37,11 +37,9 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-          gh pr close update-versions --delete-branch || true
-
           git switch --force-create update-versions
           git add versions.json
           git commit -m "Update versions.json"
           git push --force origin update-versions
 
-          gh pr create --base main --head update-versions --title "Update versions.json" --body ""
+          gh pr create --base main --head update-versions --title "Update versions.json" --body "" || true
