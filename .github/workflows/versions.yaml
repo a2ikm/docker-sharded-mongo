@@ -1,9 +1,11 @@
 name: Versions
 
 on:
-  schedule:
-    - cron: '0 1 * * 0'
-  workflow_call:
+  pull_request:
+
+  # schedule:
+  #   - cron: '0 1 * * 0'
+  # workflow_call:
 
 jobs:
   versions:
