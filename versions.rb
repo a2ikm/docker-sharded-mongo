@@ -7,6 +7,7 @@ require "uri"
 
 JSON_URL = "https://downloads.mongodb.org/current.json"
 MIN_MAJOR_VERSION = 4
+SKIPPED_MINOR_VERSIONS = ["5.3"]
 
 minor_versions = Set.new
 
@@ -18,7 +19,10 @@ JSON.parse(json)["versions"].each do |version_hash|
   major, minor, _ = version.split(".").map(&:to_i)
   next unless MIN_MAJOR_VERSION <= major
 
-  minor_versions << "#{major}.#{minor}"
+  minor_version = "#{major}.#{minor}"
+  next if SKIPPED_MINOR_VERSIONS.include?(minor_version)
+
+  minor_versions << minor_version
 end
 
 puts JSON.pretty_generate(minor_versions.to_a.sort)
