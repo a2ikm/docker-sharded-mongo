@@ -33,7 +33,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-          gh pr close update-versions --delete-branch
+          gh pr close update-versions --delete-branch || true
 
           git switch --force-create update-versions
           git add versions.json
