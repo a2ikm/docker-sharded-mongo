@@ -1,6 +1,13 @@
 name: CI
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/ci.yaml
+      - test/**
+      - docker-entrypoint.sh
+      - Dockerfile
+      - versions.json
   push:
     paths:
       - .github/workflows/ci.yaml
@@ -8,6 +15,8 @@ on:
       - docker-entrypoint.sh
       - Dockerfile
       - versions.json
+    branches:
+      - main
 
 jobs:
   versions:
