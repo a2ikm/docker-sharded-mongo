@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# This script coodinates a MongoDB sharded cluster.
+# The implementation follows https://www.mongodb.com/docs/manual/tutorial/deploy-shard-cluster/.
+#
 
 set -Eeuo pipefail
 
