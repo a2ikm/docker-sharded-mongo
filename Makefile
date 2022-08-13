@@ -2,7 +2,7 @@ MONGO_VERSION ?= latest
 
 .PHONY: test
 test:
-	docker build . \
+	docker build ./src \
 		--build-arg MONGO_VERSION=$(MONGO_VERSION) \
 		--tag a2ikm/sharded-mongo:$(MONGO_VERSION)-test
 	docker run \
