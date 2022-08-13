@@ -5,15 +5,15 @@ on:
     paths:
       - .github/workflows/ci.yaml
       - test/**
-      - docker-entrypoint.sh
-      - Dockerfile
+      - src/docker-entrypoint.sh
+      - src/Dockerfile
       - versions.json
   push:
     paths:
       - .github/workflows/ci.yaml
       - test/**
-      - docker-entrypoint.sh
-      - Dockerfile
+      - src/docker-entrypoint.sh
+      - src/Dockerfile
       - versions.json
     branches:
       - main
@@ -51,7 +51,7 @@ jobs:
       - uses: docker/setup-buildx-action@v2
       - uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./src
           load: true
           tags: |
             a2ikm/sharded-mongo:${{ matrix.version }}-test
@@ -106,7 +106,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./src
           push: true
           tags: ${{ steps.tags.outputs.value }}
           build-args: |
