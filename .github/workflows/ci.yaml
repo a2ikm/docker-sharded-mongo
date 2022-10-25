@@ -7,12 +7,14 @@ on:
       - src/**
       - test/**
       - versions.json
+      - versions.rb
   push:
     paths:
       - .github/workflows/ci.yaml
       - src/**
       - test/**
       - versions.json
+      - versions.rb
     branches:
       - main
 
