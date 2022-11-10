@@ -20,7 +20,7 @@ JSON.stringify(result)
 JAVASCRIPT
 )
 
-count=$(mongo --quiet --eval "$js" localhost:27017/testdb | \
+count=$(mongosh --quiet --eval "$js" localhost:27017/testdb | \
   jq 'map(select(.shardkeyfield == "bar")) | length')
 
 if [[ $count != 1 ]]; then
