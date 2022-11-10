@@ -6,6 +6,8 @@
 
 set -Eeuo pipefail
 
+echo "[sharded-mongo/docker-entrypoint.sh] forking config server..."
+
 mongod \
   --configsvr \
   --replSet config \
@@ -16,9 +18,12 @@ mongod \
   --logpath /var/log/mongod-config.log
 
 if [ ! -e /var/lib/sharded-mongo/mongod-config.initialized ]; then
+  echo "[sharded-mongo/docker-entrypoint.sh] initializing config server..."
   mongosh --eval 'rs.initiate({_id: "config", configsvr: true, members: [{ _id : 0, host : "localhost:27019" }]})' localhost:27019
   touch /var/lib/sharded-mongo/mongod-config.initialized
 fi
+
+echo "[sharded-mongo/docker-entrypoint.sh] forking shard server..."
 
 mongod \
   --shardsvr \
@@ -30,9 +35,12 @@ mongod \
   --logpath /var/log/mongod-shard.log
 
 if [ ! -e /var/lib/sharded-mongo/mongod-shard.initialized ]; then
+  echo "[sharded-mongo/docker-entrypoint.sh] initializing shard server..."
   mongosh --eval 'rs.initiate({_id: "shard", members: [{ _id : 0, host : "localhost:27018" }]})' localhost:27018
   touch /var/lib/sharded-mongo/mongod-shard.initialized
 fi
+
+echo "[sharded-mongo/docker-entrypoint.sh] forking mongos server..."
 
 cat <<CONF >/etc/mongos.conf
 net:
@@ -49,6 +57,7 @@ mongos \
   --logpath /var/log/mongos.log
 
 if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
+  echo "[sharded-mongo/docker-entrypoint.sh] initializing mongos server..."
   mongosh --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
   touch /var/lib/sharded-mongo/mongos.initialized
 
@@ -60,6 +69,8 @@ if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
     esac
   done
 fi
+
+echo "[sharded-mongo/docker-entrypoint.sh] shutting mongos server down..."
 
 mongosh --eval 'db.shutdownServer()' localhost:27017/admin || true
 
