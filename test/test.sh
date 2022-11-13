@@ -2,10 +2,14 @@
 
 set -Eeu pipefail
 
+echo "[sharded-mongo/test.sh] forking mongos..."
+
 mongos \
   --config /etc/mongos.conf \
   --fork \
   --logpath /var/log/mongos.log
+
+echo "[sharded-mongo/test.sh] inserting documents and counting them..."
 
 js=$(cat << JAVASCRIPT
 db.testcollection.insertMany(
@@ -20,11 +24,11 @@ JSON.stringify(result)
 JAVASCRIPT
 )
 
-count=$(mongo --quiet --eval "$js" localhost:27017/testdb | \
+count=$(mongosh --quiet --eval "$js" localhost:27017/testdb | \
   jq 'map(select(.shardkeyfield == "bar")) | length')
 
 if [[ $count != 1 ]]; then
-  echo "expected 1 but got $count"
+  echo "[sharded-mongo/test.sh] expected 1 but got $count"
   exit 1
 fi
 
