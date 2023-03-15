@@ -7,7 +7,7 @@ require "uri"
 
 JSON_URL = "https://downloads.mongodb.org/current.json"
 MIN_MAJOR_VERSION = 4
-SKIPPED_MINOR_VERSIONS = ["5.3", "6.1"]
+SKIPPED_MINOR_VERSIONS = ["5.3", "6.1", "6.2"]
 
 minor_versions = Set.new
 
