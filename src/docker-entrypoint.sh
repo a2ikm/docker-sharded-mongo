@@ -74,4 +74,9 @@ echo "[sharded-mongo/docker-entrypoint.sh] shutting mongos server down..."
 
 mongosh --eval 'db.shutdownServer()' localhost:27017/admin || true
 
+while pgrep mongos > /dev/null; do
+  echo "[sharded-mongo/docker-entrypoint.sh] mongos is shutting down. sleep 1 second..."
+  sleep 1
+done
+
 exec "$@"
