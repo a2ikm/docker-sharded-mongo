@@ -86,7 +86,7 @@ jobs:
           require "json"
 
           version = ENV.fetch("MONGO_VERSION")
-          latest = JSON.parse(File.read("versions.json")).sort.last
+          latest = Dir["src/*"].map { |path| File.basename(path) }.sort.last
 
           tags = [
             "a2ikm/sharded-mongo:#{version}",
