@@ -1,5 +1,4 @@
-ARG MONGO_VERSION=latest
-FROM mongo:${MONGO_VERSION}
+FROM mongo:7.0
 
 RUN set -eux; \
       dpkgArch="$(dpkg --print-architecture)"; \
