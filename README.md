@@ -56,3 +56,9 @@ $ make test
 # with all versions
 $ make test-all
 ```
+
+### How to add new version
+
+1. Add `src/N.N` directory with Dockerfile etc.
+2. Add `.github/workflows/ci-N-N.yaml`
+3. Update `make test-all` definition in Makefile
