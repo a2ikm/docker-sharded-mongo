@@ -19,7 +19,7 @@ mongod \
 
 if [ ! -e /var/lib/sharded-mongo/mongod-config.initialized ]; then
   echo "[sharded-mongo/docker-entrypoint.sh] initializing config server..."
-  mongosh --eval 'rs.initiate({_id: "config", configsvr: true, members: [{ _id : 0, host : "localhost:27019" }]})' localhost:27019
+  mongo --eval 'rs.initiate({_id: "config", configsvr: true, members: [{ _id : 0, host : "localhost:27019" }]})' localhost:27019
   touch /var/lib/sharded-mongo/mongod-config.initialized
 fi
 
@@ -36,7 +36,7 @@ mongod \
 
 if [ ! -e /var/lib/sharded-mongo/mongod-shard.initialized ]; then
   echo "[sharded-mongo/docker-entrypoint.sh] initializing shard server..."
-  mongosh --eval 'rs.initiate({_id: "shard", members: [{ _id : 0, host : "localhost:27018" }]})' localhost:27018
+  mongo --eval 'rs.initiate({_id: "shard", members: [{ _id : 0, host : "localhost:27018" }]})' localhost:27018
   touch /var/lib/sharded-mongo/mongod-shard.initialized
 fi
 
@@ -58,13 +58,13 @@ mongos \
 
 if [ ! -e /var/lib/sharded-mongo/mongos.initialized ]; then
   echo "[sharded-mongo/docker-entrypoint.sh] initializing mongos server..."
-  mongosh --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
+  mongo --eval 'sh.addShard("shard/localhost:27018")' localhost:27017
   touch /var/lib/sharded-mongo/mongos.initialized
 
   for f in /docker-entrypoint-initdb.d/*; do
     case "$f" in
       *.sh) echo "$0: running $f"; . "$f" ;;
-      *.js) echo "$0: running $f"; mongosh localhost:27017 "$f"; echo ;;
+      *.js) echo "$0: running $f"; mongo localhost:27017 "$f"; echo ;;
       *)    echo "$0: ignoring $f" ;;
     esac
   done
@@ -72,7 +72,7 @@ fi
 
 echo "[sharded-mongo/docker-entrypoint.sh] shutting mongos server down..."
 
-mongosh --eval 'db.shutdownServer()' localhost:27017/admin || true
+mongo --eval 'db.shutdownServer()' localhost:27017/admin
 
 while pgrep mongos > /dev/null; do
   echo "[sharded-mongo/docker-entrypoint.sh] mongos is shutting down. sleep 1 second..."
