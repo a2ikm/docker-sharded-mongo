@@ -4,22 +4,12 @@ on:
   pull_request:
     paths:
       - .github/workflows/ci.yaml
-      - 4.0/**
-      - 4.2/**
-      - 4.4/**
-      - 5.0/**
-      - 6.0/**
-      - 7.0/**
+      - src/**
       - test/**
   push:
     paths:
       - .github/workflows/ci.yaml
-      - 4.0/**
-      - 4.2/**
-      - 4.4/**
-      - 5.0/**
-      - 6.0/**
-      - 7.0/**
+      - src/**
       - test/**
     branches:
       - main
@@ -42,7 +32,7 @@ jobs:
         id: versions
         run: |
           require "json"
-          versions = Dir["*"].grep(/^\d+\.\d+$/)
+          versions = Dir["src/*"].map { |path| File.basename(path) }
           puts "::set-output name=value::#{versions.to_json}"
         shell: ruby {0}
 
@@ -61,7 +51,7 @@ jobs:
       - uses: docker/setup-buildx-action@v2
       - uses: docker/build-push-action@v3
         with:
-          context: ./${{ matrix.version }}
+          context: ./src/${{ matrix.version }}
           load: true
           tags: |
             a2ikm/sharded-mongo:${{ matrix.version }}-test
@@ -116,7 +106,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: docker/build-push-action@v3
         with:
-          context: ./${{ matrix.version }}
+          context: ./src/${{ matrix.version }}
           push: true
           tags: ${{ steps.tags.outputs.value }}
           build-args: |

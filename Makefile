@@ -2,7 +2,7 @@ MONGO_VERSION ?= 7.0
 
 .PHONY: test
 test:
-	docker build ./$(MONGO_VERSION) \
+	docker build ./src/$(MONGO_VERSION) \
 		--tag a2ikm/sharded-mongo:$(MONGO_VERSION)-test
 	docker run \
 		--rm \
