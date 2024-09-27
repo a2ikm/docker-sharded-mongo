@@ -53,6 +53,6 @@ If you have an issue, please file it to https://github.com/a2ikm/docker-sharded-
 # with latest version
 $ make test
 
-# with specific version
-$ make test MONGO_VERSION=4.4
+# with all versions
+$ make test-all
 ```
