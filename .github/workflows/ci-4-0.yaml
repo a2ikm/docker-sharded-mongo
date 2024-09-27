@@ -1,0 +1,23 @@
+name: CI / 4.0
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/ci-4-0.yaml
+      - src/4.0/**
+  push:
+    paths:
+      - .github/workflows/ci-4-0.yaml
+      - src/4.0/**
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-release:
+    uses: ./.github/workflows/reusable--test-and-release.yaml
+    with:
+      version: "4.0"
