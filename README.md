@@ -21,10 +21,16 @@ It loads  `*.sh` files or `*.js` files mounted at `/docker-entrypoint-initdb.d`.
 
 ## Supported MongoDB versions
 
-They are managed in versions.json hosted on GitHub:
-https://github.com/a2ikm/docker-sharded-mongo/blob/main/versions.json.
+We support the following versions:
 
-It is updated weekly to track recent minor versions.
+- 4.0
+- 4.2
+- 4.4
+- 5.0
+- 6.0
+- 7.0
+
+They are from [Docker official image](https://hub.docker.com/_/mongo).
 
 ## Development
 

@@ -6,13 +6,11 @@ on:
       - .github/workflows/ci.yaml
       - src/**
       - test/**
-      - versions.json
   push:
     paths:
       - .github/workflows/ci.yaml
       - src/**
       - test/**
-      - versions.json
     branches:
       - main
 
