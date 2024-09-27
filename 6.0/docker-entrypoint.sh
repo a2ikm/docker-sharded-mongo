@@ -12,7 +12,8 @@ mongod \
   --configsvr \
   --replSet config \
   --dbpath /var/lib/sharded-mongo/mongod-config \
-  --bind_ip ::,0.0.0.0 \
+  --bind_ip_all \
+  --ipv6 \
   --port 27019 \
   --fork \
   --logpath /var/log/mongod-config.log
@@ -29,7 +30,8 @@ mongod \
   --shardsvr \
   --replSet shard \
   --dbpath /var/lib/sharded-mongo/mongod-shard \
-  --bind_ip ::,0.0.0.0 \
+  --bind_ip_all \
+  --ipv6 \
   --port 27018 \
   --fork \
   --logpath /var/log/mongod-shard.log
