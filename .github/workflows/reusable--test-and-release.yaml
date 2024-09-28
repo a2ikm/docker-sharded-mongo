@@ -7,6 +7,13 @@ on:
         type: string
         required: true
         description: Version of MongoDB to test and release
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+        description: Docker Hub username
+      DOCKERHUB_TOKEN:
+        required: true
+        description: Docker Hub token
 jobs:
   test:
     runs-on: ubuntu-latest

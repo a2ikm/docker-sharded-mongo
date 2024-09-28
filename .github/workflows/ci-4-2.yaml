@@ -21,3 +21,6 @@ jobs:
     uses: ./.github/workflows/reusable--test-and-release.yaml
     with:
       version: "4.2"
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
