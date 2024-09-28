@@ -61,7 +61,9 @@ jobs:
             tags << "a2ikm/sharded-mongo:latest"
           end
 
-          puts "::set-output name=value::#{tags.join(",")}"
+          File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |file|
+            file.puts("value=#{tags.join(",")}")
+          end
         shell: ruby {0}
       - uses: docker/setup-qemu-action@v2
       - uses: docker/setup-buildx-action@v2
