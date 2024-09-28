@@ -24,7 +24,12 @@ JSON.stringify(result)
 JAVASCRIPT
 )
 
-count=$(mongosh --quiet --eval "$js" localhost:27017/testdb | \
+mongocli="mongo"
+if type mongosh &> /dev/null; then
+  mongocli="mongosh"
+fi
+
+count=$($mongocli --quiet --eval "$js" localhost:27017/testdb | \
   jq 'map(select(.shardkeyfield == "bar")) | length')
 
 if [[ $count != 1 ]]; then
