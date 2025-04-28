@@ -18,3 +18,4 @@ test-all:
 	make test MONGO_VERSION=5.0
 	make test MONGO_VERSION=6.0
 	make test MONGO_VERSION=7.0
+	make test MONGO_VERSION=8.0
