@@ -1,0 +1,26 @@
+name: CI / 8.0
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/ci-8-0.yaml
+      - src/8.0/**
+  push:
+    paths:
+      - .github/workflows/ci-8-0.yaml
+      - src/8.0/**
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-release:
+    uses: ./.github/workflows/reusable--test-and-release.yaml
+    with:
+      version: "8.0"
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
