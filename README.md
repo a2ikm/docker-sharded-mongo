@@ -30,6 +30,7 @@ We support the following versions:
 - 6.0
 - 7.0
 - 8.0
+- 9.0
 
 They are from [Docker official image](https://hub.docker.com/_/mongo).
 

@@ -1,4 +1,4 @@
-MONGO_VERSION ?= 7.0
+MONGO_VERSION ?= 9.0
 
 .PHONY: test
 test:
@@ -19,3 +19,4 @@ test-all:
 	make test MONGO_VERSION=6.0
 	make test MONGO_VERSION=7.0
 	make test MONGO_VERSION=8.0
+	make test MONGO_VERSION=9.0
